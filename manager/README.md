@@ -1,24 +1,27 @@
-HackTheBox Machine: Mananger - Walkthrough
-HTB box name: Mananger
-OS: Windows
-Difficulty: Medium
-IP: 10.10.11.236
+# HackTheBox Machine: Mananger - Walkthrough
 
-# Scanning
+- HTB box name: Mananger
+- OS: Windows
+- Difficulty: Medium
+- IP: 10.10.11.236
 
-I like to start with scanning all available ports with nmap.
-`nmap -p- -oA nmap/allPorts 10.10.11.236`
+## Scanning
 
-<!-- scan image -->
+Lets scan againg for known ports with some extra flags:
 
-Lets scan againg for known ports with some extra flags
--sC : Default script scan
--sV : Service version detection
--oA : Output to file(to keep the record)
+- sC : Default script scan
+- sV : Service version detection
+- oA : Output to file(to keep the record)
 
-<!-- scan image -->
+![nmapResult](image-15.png)
 
 There are a lot of open ports, lets list the interesting ones to tackle with:
+
+1. 80(HTTP) - Web server
+2. 445(SMB) - File sharing
+3. 1433(MSSQL) - SQL server
+4. 3268(LDAP) - LDAP
+5. 3268(LDAP) - LDAP over SSL
 
 ## 80(HTTP) - Web server
 
@@ -99,10 +102,8 @@ I found Certify.exe which is used for privelage escalation in Windows machines, 
 
 Before digging into it, lets see what we can find user flag.
 ![userflag](image-14.png)
+
 And we were able to find user flag.
 
-# Privelage Escalation
-
-As we found `Certify.exe`, lets see if we can run it and find possible privelages escalation paths.
-
+## Privelage Escalation
 
