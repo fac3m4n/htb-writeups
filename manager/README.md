@@ -48,7 +48,7 @@ Lets move forward.
 ## 445(SMB) - File sharing
 
 This is interesting one. Most of times SMB is accesible as anonymous user.
-Will be using crackmapexec, which is powerfull tool to enumerate Windows/Active Directory environments, to try to access SMB and bruteforce AD objects.
+Will be using [crackmapexec](https://github.com/byt3bl33d3r/CrackMapExec), which is powerfull tool to enumerate Windows/Active Directory environments, to try to access SMB and bruteforce AD objects.
 
 `crackmapexec smb 10.10.11.236 -u anonymous -p "" --rid-brute 10000`
 
@@ -109,9 +109,11 @@ Simple [google search](https://serverfault.com/questions/281159/finding-the-root
 ![iisDirectory](image-8.png)
 
 We found `website-backup-27-07-23-old.zip` file and we can download it with wget and see whats in there.
+
 ![wget](image-9.png)
 
-Found .`old-conf.xml` file. And there were credentials for previous user that we found: `raven`
+Found `.old-conf.xml` file. And there were credentials for previous user that we found: `raven`
+
 ![oldconf](image-10.png)
 ![userData](image-11.png)
 
