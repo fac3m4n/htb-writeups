@@ -15,7 +15,7 @@ Lets scan againg for known ports with some extra flags:
 - sV : Service version detection
 - oA : Output to file(to keep the record)
 
-![nmapResult](manager/images/image-15.png)
+![nmapResult](images/image-15.png)
 
 There are a lot of open ports, lets list the interesting ones to tackle with:
 
