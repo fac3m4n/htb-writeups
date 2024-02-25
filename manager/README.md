@@ -5,6 +5,8 @@
 - Difficulty: Medium
 - IP: 10.10.11.236
 
+I will be using [Hacktricks](https://book.hacktricks.xyz/welcome/readme) as guide in my walkthrough. It is awesome resource and includes lots of useful information when pentesting.
+
 ## Scanning
 
 Lets scan againg for known ports with some extra flags:
@@ -47,17 +49,18 @@ Lets move forward.
 
 This is interesting one. Most of times SMB is accesible as anonymous user.
 Will be using crackmapexec, which is powerfull tool to enumerate Windows/Active Directory environments, to try to access SMB and bruteforce AD objects.
+
 `crackmapexec smb 10.10.11.236 -u anonymous -p "" --rid-brute 10000`
 
 ![smbScan](image.png)
 
-We were able to get usernames. Lets tidy them up and save them in `users.txt` file so that we can use them in bruteforcing. Running bruteforcing with huge list can take a long time. We can try to go faster route by trying usernames as passwords. Human nature is lazy to use complicated passwords sometimes :D
+We were able to get usernames. Lets tidy them up and save them in `users.txt` file so that we can use them in bruteforcing. Running bruteforcing with huge list can take a long time. We can try to go faster route by trying usernames as passwords. Human nature is lazy to use complicated passwords sometimes :D.
 We can again use `crackmapexec`, by specifying user and password list with additinal flags.
 `crackmapexec smb 10.10.11.236 -u users.txt -p users.txt --no-brute --continue-on-success`
 
 ![smbScan2](image-2.png)
 
-It worked for `operator` user.
+It worked for `operator` user. Lets look into shares and see if we can find something.
 
 ## 1433(MSSQL) - SQL server
 
