@@ -127,12 +127,12 @@ Appears that we can access using these credentials. We will utilize this credent
 
 ![evilwinrm1](image-13.png)
 
-I found Certify.exe which is used for privelage escalation in Windows machines, especially for  Active Directory certificate abusing.
+I found Certify.exe which is used for privelage escalation in Windows machines, especially for  Active Directory certificate abusing. This is can be a hint for us to escalate privelages.
 
-Before digging into it, lets see what we can find user flag.
+Before digging into it, lets see what we can find user flag in users Desktop
 ![userflag](image-14.png)
 
-And we were able to find user flag.
+Here is our user flag.
 
 ## Privelage Escalation
 
