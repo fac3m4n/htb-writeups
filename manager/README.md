@@ -127,7 +127,7 @@ Appears that we can access using these credentials. We will utilize this credent
 
 ![evilwinrm1](image-13.png)
 
-I found Certify.exe which is used for privelage escalation in Windows machines, especially for  Active Directory certificate abusing. This is can be a hint for us to escalate privelages.
+I found `Certify.exe` which is used for privelage escalation in Windows machines, especially for  Active Directory certificate abusing. This is can be a hint for us to escalate privelages.
 
 Before digging into it, lets see what we can find user flag in users Desktop
 ![userflag](image-14.png)
@@ -137,3 +137,19 @@ Here is our user flag.
 ## Privelage Escalation
 
 As this is machine is active directory I wanted to follow [Active Directory Methodology](https://book.hacktricks.xyz/windows-hardening/active-directory-methodology) methods to escalate privelages.
+First we need to check what privelages does user Raven have.
+`whoami /priv` command can help us with that.
+
+![userPriv](image-21.png)
+
+We can see that user Raven has `SeMachineAccountPrivilege` privelages that stand out.
+I will try to run [winpeass.exe](https://github.com/carlospolop/PEASS-ng/tree/master/winPEAS) to see if we can find something interesting.
+We can upload it using `upload` command.
+
+![winpeas](image-22.png)
+
+It gave huge list of possible things we can do in order to attack.
+
+And also I made google search for `SeMachineAccountPrivilege` abuses and found [WindowsAD Escalation](https://github.com/0xJs/RedTeaming_CheatSheet/blob/main/windows-ad/Domain-Privilege-Escalation.md) article.
+
+I was not able to make privelage escalation for now. Will need some time digging into it. I will be back with pwned machine soon. Stay tuned.
