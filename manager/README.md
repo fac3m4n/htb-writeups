@@ -62,6 +62,16 @@ We can again use `crackmapexec`, by specifying user and password list with addit
 
 It worked for `operator` user. Lets look into shares and see if we can find something.
 
+Will be using `smbclient` to list the shares
+
+![smbshares](image-17.png)
+
+So we have common share names for Windows machines as expected.
+
+Tried to list files in `C$` share but it did not work.
+
+![smbCaccessDenied](image-18.png)
+
 ## 1433(MSSQL) - SQL server
 
 Lets try `operator` user to enumarate MSSQL server as well. We will be using same `crackmapexec` command as above but for mssql.
@@ -79,22 +89,29 @@ Lets look around and see if we can find something. Help command is handy here an
 ![impacketHelp](image-5.png)
 
 I have enumerated db, no interesting info there.
-If we want to have reverse shell we need to access to cmd. So we can use `xp_cmdshell`. Upon trying, we see that we do not have permissions.
+If we want to have reverse shell we need to access to cmd `xp_cmdshell`.
+We cna check for permissions if we can use that command `EXEC sp_helprotect '$commandName'`
 
-![cmdDenied](image-6.png)
+![checkPermissions](image-19.png)
 
-We can utilize `xp_dirtree` to list the directory. And try to look for interesting files.
+So we do not have permissions to use `xp_cmdshell` command.
+But we have permission for `xp_dirtree` to list the directories. And try to look for interesting files.
 
 ![dirtree](image-7.png)
 
-Simple google search will tell us `c:\Inetpub\wwwroot` is default IIS directory. We can take a look there.
+We can see directories and lets try to go into `Users` directory, and see if we have something there.
+We can see potential user Raven, but the folder is empty
+
+![userFolder](image-20.png)
+
+Simple [google search](https://serverfault.com/questions/281159/finding-the-root-for-a-windows-iis-server) will tell us `c:\Inetpub\wwwroot` is default IIS directory. We can take a look there.
 
 ![iisDirectory](image-8.png)
 
 We found `website-backup-27-07-23-old.zip` file and we can download it with wget and see whats in there.
 ![wget](image-9.png)
 
-Found .`old-conf.xml` file. And there were credentials for user: `raven`
+Found .`old-conf.xml` file. And there were credentials for previous user that we found: `raven`
 ![oldconf](image-10.png)
 ![userData](image-11.png)
 
@@ -103,7 +120,7 @@ We can test if that credentials are still correct with `crackmapexec`.
 
 ![crackWinrm](image-12.png)
 
-Appears that we can access using these credentials. We will utilize this credentials to get acces into system shell using `evil-winrm`.
+Appears that we can access using these credentials. We will utilize this credentials to get acces into system shell using [evil-winrm](https://github.com/Hackplayers/evil-winrm).
 `evil-winrm -i 10.10.11.236 -u raven -p 'R4v3nBe5tD3veloP3r!123'`
 
 ![evilwinrm1](image-13.png)
