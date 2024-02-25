@@ -136,3 +136,4 @@ Here is our user flag.
 
 ## Privelage Escalation
 
+As this is machine is active directory I wanted to follow [Active Directory Methodology](https://book.hacktricks.xyz/windows-hardening/active-directory-methodology) methods to escalate privelages.
