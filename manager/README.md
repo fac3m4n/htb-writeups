@@ -26,19 +26,26 @@ There are a lot of open ports, lets list the interesting ones to tackle with:
 ## 80(HTTP) - Web server
 
 LDAP ports revealed Domain Names, lets add them to /etc/hosts file
+
 `echo 10.10.11.236  dc01.manager.htb mananger.htb >> /etc/hosts`
 
 Upon checking the website couldn't find much in client side source code.
-Was simple website with contact form. And form action was empty so it does not preform any server side actions
+Was simple website with contact form. And form action was empty so it does not preform any server side actions.
+
+![formNoAction](image-16.png)
+
 Lets preform directory bruteforcing with gobuster and see if we can find something.
+
 `gobuster dir -u 10.10.11.236 -w /usr/share/dirb/wordlists/common.txt`
+
 ![gobuster](image-1.png)
+
 There was not much of interesting directories.
 Lets move forward.
 
 ## 445(SMB) - File sharing
 
-This is interesting one. Most of times SMB is accesible by autonomous users.
+This is interesting one. Most of times SMB is accesible as anonymous user.
 Will be using crackmapexec, which is powerfull tool to enumerate Windows/Active Directory environments, to try to access SMB and bruteforce AD objects.
 `crackmapexec smb 10.10.11.236 -u anonymous -p "" --rid-brute 10000`
 
